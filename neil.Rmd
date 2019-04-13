@@ -5,7 +5,7 @@ date: "April 13, 2019"
 output: html_document
 ---
 
-```{r setup, include=FALSE}
+```{r setup, include=FALSE, message = FALE, echo = FALSE}
 knitr::opts_chunk$set(echo = TRUE) 
 library(gsheet)
 library(tidyverse)
@@ -17,46 +17,48 @@ library(ggplot2)
 hudsdata<-gsheet2tbl('https://docs.google.com/spreadsheets/d/1S3vFDul1PeB84Zd8G5ewe1ocZ6ezidQzAp5gn1eiHtQ/edit#gid=0')
 ```
 
-```{r huds, echo = FALSE}
-breakfast_frequency_plot <- hudsdata %>% 
+```{r breakfast, echo = FALSE}
+breakfast_frequency <- hudsdata %>% 
   filter(Meal == "Breakfast") %>% 
   group_by(Food) %>% 
   summarize(count=n()) %>% 
   arrange(desc(count)) %>% 
-  slice(1:5) %>% 
-  ggplot(aes(x = Food, y = count, color = Food, fill = Food)) +
+  slice(1:5)  
+
+ggplot(breakfast_frequency, aes(x = Food, y = count, color = Food, fill = Food)) +
   geom_bar(stat = "identity") +
   labs(x = "Food Item", y = "Frequency", title = "Top Five Most Served Breakfast Items by HUDS", caption ="Data collected from 11/10/2018 - 4/13/2019 \n 
        Source: Harvard University Dining Services") +
   theme(legend.position = "none")
-breakfast_frequency_plot
 
+```
+
+```{r lunch, echo = FALSE}
 lunch_frequency_plot <- hudsdata %>% 
   filter(Meal == "Lunch") %>% 
   group_by(Food) %>% 
   summarize(count=n()) %>% 
   arrange(desc(count)) %>%
-  slice(1:5) %>% 
-  ggplot(aes(x = Food, y = count, color = Food, fill = Food)) +
+  slice(1:5) 
+
+ggplot(lunch_frequency_plot, aes(x = Food, y = count, color = Food, fill = Food)) +
   geom_bar(stat = "identity") +
   labs(x = "Food Item", y = "Frequency", title = "Top Five Most Served Lunch Items by HUDS", caption ="Data collected from 11/10/2018 - 4/13/2019 \n 
        Source: Harvard University Dining Services") +
   theme(legend.position = "none")
-lunch_frequency_plot
+```
 
+```{r dinner, echo = FALSE}
 dinner_frequency_plot <- hudsdata %>% 
   filter(Meal == "Dinner") %>% 
   group_by(Food) %>% 
   summarize(count=n()) %>% 
   arrange(desc(count)) %>% 
-  slice(1:5) %>% 
-  ggplot(aes(x = Food, y = count, color = Food, fill = Food)) +
+  slice(1:5) 
+
+ggplot(dinner_frequency_plot, aes(x = Food, y = count, color = Food, fill = Food)) +
   geom_bar(stat = "identity") +
   labs(x = "Food Item", y = "Frequency", title = "Top Five Most Served Dinner Items by HUDS", caption ="Data collected from 11/10/2018 - 4/13/2019 \n 
        Source: Harvard University Dining Services") +
   theme(legend.position = "none")
-dinner_frequency_plot
-
-  
-
 ```
