@@ -5,6 +5,7 @@ output: html_document
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+library(gsheet)
 ```
 
 
@@ -13,7 +14,8 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 
 ```{r}
-hudsdata <- read.csv("Huds.csv",as.is = TRUE)
+hudsdata<-gsheet2tbl('https://docs.google.com/spreadsheets/d/1S3vFDul1PeB84Zd8G5ewe1ocZ6ezidQzAp5gn1eiHtQ/edit#gid=0')
+data.frame(hudsdata)
 ```
 
 ```{r}
