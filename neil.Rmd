@@ -18,10 +18,44 @@ hudsdata<-gsheet2tbl('https://docs.google.com/spreadsheets/d/1S3vFDul1PeB84Zd8G5
 ```
 
 ```{r huds, echo = FALSE}
-frequency_plot <- hudsdata %>% 
+breakfast_frequency_plot <- hudsdata %>% 
+  filter(Meal == "Breakfast") %>% 
   group_by(Food) %>% 
   summarize(count=n()) %>% 
-  arrange(desc(count))
+  arrange(desc(count)) %>% 
+  slice(1:5) %>% 
+  ggplot(aes(x = Food, y = count, color = Food, fill = Food)) +
+  geom_bar(stat = "identity") +
+  labs(x = "Food Item", y = "Frequency", title = "Top Five Most Served Breakfast Items by HUDS", caption ="Data collected from 11/10/2018 - 4/13/2019 \n 
+       Source: Harvard University Dining Services") +
+  theme(legend.position = "none")
+breakfast_frequency_plot
+
+lunch_frequency_plot <- hudsdata %>% 
+  filter(Meal == "Lunch") %>% 
+  group_by(Food) %>% 
+  summarize(count=n()) %>% 
+  arrange(desc(count)) %>%
+  slice(1:5) %>% 
+  ggplot(aes(x = Food, y = count, color = Food, fill = Food)) +
+  geom_bar(stat = "identity") +
+  labs(x = "Food Item", y = "Frequency", title = "Top Five Most Served Lunch Items by HUDS", caption ="Data collected from 11/10/2018 - 4/13/2019 \n 
+       Source: Harvard University Dining Services") +
+  theme(legend.position = "none")
+lunch_frequency_plot
+
+dinner_frequency_plot <- hudsdata %>% 
+  filter(Meal == "Dinner") %>% 
+  group_by(Food) %>% 
+  summarize(count=n()) %>% 
+  arrange(desc(count)) %>% 
+  slice(1:5) %>% 
+  ggplot(aes(x = Food, y = count, color = Food, fill = Food)) +
+  geom_bar(stat = "identity") +
+  labs(x = "Food Item", y = "Frequency", title = "Top Five Most Served Dinner Items by HUDS", caption ="Data collected from 11/10/2018 - 4/13/2019 \n 
+       Source: Harvard University Dining Services") +
+  theme(legend.position = "none")
+dinner_frequency_plot
 
   
 
