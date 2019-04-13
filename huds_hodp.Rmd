@@ -1,0 +1,42 @@
+---
+title: "HOPD-HUDS-Data"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+```{r}
+
+```
+
+```{r}
+hudsdata <- read.csv("Huds.csv",as.is = TRUE)
+```
+
+```{r}
+
+breakfast = subset(hudsdata, hudsdata$Meal == "Breakfast")
+lunch = subset(hudsdata, hudsdata$Meal == "Lunch")
+dinner = subset(hudsdata, hudsdata$Meal == "Dinner")
+
+
+
+
+num.items = 19
+breakfast.meals = unique(breakfast$Date)
+breakfast.1 = matrix(nrow = (num.items+1), ncol = length(breakfast.meals))
+breakfast.1[1,] = breakfast.meals
+a = vector()
+for (i in 1:length(breakfast.meals)) {
+indexes = which(breakfast$Date == breakfast.meals[i])
+a[i] = length(indexes)
+food = breakfast$Food[indexes]
+breakfast.1[2:(num.items+1),i] = food[1:num.items]
+}
+
+breakfast.1[,8]
+```
+
