@@ -24,13 +24,12 @@ breakfast_frequency <- hudsdata %>%
   summarize(count=n()) %>% 
   arrange(desc(count)) %>% 
   slice(1:5)  
-
+hudsdata$Date[1]
 ggplot(breakfast_frequency, aes(x = Food, y = count, color = Food, fill = Food)) +
   geom_bar(stat = "identity") +
-  labs(x = "Food Item", y = "Frequency", title = "Top Five Most Served Breakfast Items by HUDS", caption ="Data collected from 11/10/2018 - 4/13/2019 \n 
+  labs(x = "Food Item", y = "Frequency", title = "Top Five Most Frequent Breakfast Items by HUDS", caption = paste("Data collected from 11/10/2018 -", \n 
        Source: Harvard University Dining Services") +
   theme(legend.position = "none")
-
 ```
 
 ```{r lunch, echo = FALSE}
@@ -43,7 +42,7 @@ lunch_frequency_plot <- hudsdata %>%
 
 ggplot(lunch_frequency_plot, aes(x = Food, y = count, color = Food, fill = Food)) +
   geom_bar(stat = "identity") +
-  labs(x = "Food Item", y = "Frequency", title = "Top Five Most Served Lunch Items by HUDS", caption ="Data collected from 11/10/2018 - 4/13/2019 \n 
+  labs(x = "Food Item", y = "Frequency", title = "Top Five Most Frequent Lunch Items by HUDS", caption ="Data collected from 11/10/2018 - 4/13/2019 \n 
        Source: Harvard University Dining Services") +
   theme(legend.position = "none")
 ```
@@ -58,7 +57,7 @@ dinner_frequency_plot <- hudsdata %>%
 
 ggplot(dinner_frequency_plot, aes(x = Food, y = count, color = Food, fill = Food)) +
   geom_bar(stat = "identity") +
-  labs(x = "Food Item", y = "Frequency", title = "Top Five Most Served Dinner Items by HUDS", caption ="Data collected from 11/10/2018 - 4/13/2019 \n 
+  labs(x = "Food Item", y = "Frequency", title = "Top Five Most Frequent Dinner Items by HUDS", caption ="Data collected from 11/10/2018 - 4/13/2019 \n 
        Source: Harvard University Dining Services") +
   theme(legend.position = "none")
 ```
