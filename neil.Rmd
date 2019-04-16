@@ -5,26 +5,59 @@ date: "April 13, 2019"
 output: html_document
 ---
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)   
+```{r setup, include=FALSE, message = FALE, echo = FALSE}
+knitr::opts_chunk$set(echo = TRUE) 
+library(gsheet)
+library(tidyverse)
+library(ggplot2)
 ```
 
-## R Markdown
 
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
-
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
-
-```{r cars}
-summary(cars)
+```{r huds}
+hudsdata<-gsheet2tbl('https://docs.google.com/spreadsheets/d/1S3vFDul1PeB84Zd8G5ewe1ocZ6ezidQzAp5gn1eiHtQ/edit#gid=0')
 ```
 
-## Including Plots
-
-You can also embed plots, for example:
-
-```{r pressure, echo=FALSE}
-plot(pressure)
+```{r breakfast, echo = FALSE}
+breakfast_frequency <- hudsdata %>% 
+  filter(Meal == "Breakfast") %>% 
+  group_by(Food) %>% 
+  summarize(count=n()) %>% 
+  arrange(desc(count)) %>% 
+  slice(1:5)  
+hudsdata$Date[1]
+ggplot(breakfast_frequency, aes(x = Food, y = count, color = Food, fill = Food)) +
+  geom_bar(stat = "identity") +
+  labs(x = "Food Item", y = "Frequency", title = "Top Five Most Frequent Breakfast Items by HUDS", caption = paste("Data collected from 11/10/2018 -", \n 
+       Source: Harvard University Dining Services") +
+  theme(legend.position = "none")
 ```
 
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+```{r lunch, echo = FALSE}
+lunch_frequency_plot <- hudsdata %>% 
+  filter(Meal == "Lunch") %>% 
+  group_by(Food) %>% 
+  summarize(count=n()) %>% 
+  arrange(desc(count)) %>%
+  slice(1:5) 
+
+ggplot(lunch_frequency_plot, aes(x = Food, y = count, color = Food, fill = Food)) +
+  geom_bar(stat = "identity") +
+  labs(x = "Food Item", y = "Frequency", title = "Top Five Most Frequent Lunch Items by HUDS", caption ="Data collected from 11/10/2018 - 4/13/2019 \n 
+       Source: Harvard University Dining Services") +
+  theme(legend.position = "none")
+```
+
+```{r dinner, echo = FALSE}
+dinner_frequency_plot <- hudsdata %>% 
+  filter(Meal == "Dinner") %>% 
+  group_by(Food) %>% 
+  summarize(count=n()) %>% 
+  arrange(desc(count)) %>% 
+  slice(1:5) 
+
+ggplot(dinner_frequency_plot, aes(x = Food, y = count, color = Food, fill = Food)) +
+  geom_bar(stat = "identity") +
+  labs(x = "Food Item", y = "Frequency", title = "Top Five Most Frequent Dinner Items by HUDS", caption ="Data collected from 11/10/2018 - 4/13/2019 \n 
+       Source: Harvard University Dining Services") +
+  theme(legend.position = "none")
+```
